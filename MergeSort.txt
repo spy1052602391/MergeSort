@@ -1,0 +1,55 @@
+package 数据结构.七大排序.归并排序;
+
+public class Main {
+    public static void mergerSortCode(int[] arr,int leftstart,int leftend,int rightstart,int rightend){
+        int[] arr2 = new int[rightend-leftstart+1];
+        int left = leftstart;
+        int num = 0;
+        while(leftstart <= leftend && rightstart<=rightend){
+            if(arr[leftstart] < arr[rightstart]) {
+                arr2[num] = arr[leftstart];
+                leftstart++;
+            }
+            else {
+                arr2[num] = arr[rightstart];
+                rightstart++;
+            }
+            num++;
+        }
+        if(leftstart>leftend){
+            while(rightstart<=rightend){
+                arr2[num] = arr[rightstart];
+                num++;
+                rightstart++;
+            }
+        }else{
+            while(leftstart<=leftend){
+                arr2[num] = arr[leftstart];
+                num++;
+                leftstart++;
+            }
+        }
+        num=0;
+        while(left<=rightend){
+            arr[left] = arr2[num];
+            num++;
+            left++;
+        }
+
+    }
+
+    public static void mergerSort(int[] arr,int start,int end){
+        if(start == end)
+            return;
+        int mid = (start+end)/2;
+        mergerSort(arr,start,mid);
+        mergerSort(arr,mid+1,end);
+        mergerSortCode(arr,start,mid,mid+1,end);
+    }
+    public static void main(String[] args) {
+        int[] arr = {3,4,2,7,5,8,9,0,1,6};
+        mergerSort(arr,0,arr.length-1);
+        for(int i=0; i<arr.length; i++)
+            System.out.print(arr[i]);
+    }
+}
